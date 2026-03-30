@@ -2,105 +2,161 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>虎天寿发卡网</title>
+    <title>虎天寿发卡</title>
     <style>
-        /* 重置样式 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 微软雅黑, sans-serif;
         }
 
-        /* 页面核心样式：背景图 + 全屏居中 */
         body {
-            width: 100vw;
-            height: 100vh;
-            /* 背景图链接（可替换） */
-            background: url("https://i.imgur.com/23C9uNm.jpeg") center/cover no-repeat fixed;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #ffffff;
-            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-            text-shadow: 0 0 12px rgba(0, 0, 0, 0.8);
-            overflow: hidden;
+            background: url('https://i.imgur.com/23C9uNm.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
         }
 
-        /* 中间大字样式 */
-        .title {
-            font-size: 48px;
+        .top-name {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+            font-size: 28px;
             font-weight: bold;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
+            text-shadow: 0 0 10px #000;
         }
 
-        /* 收款码样式 */
-        .qrcode {
-            width: 240px;
-            height: 240px;
+        .container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 0 20px;
+        }
+
+        .box {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
             border-radius: 16px;
-            border: 5px solid #ffffff;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            margin-bottom: 50px;
-            object-fit: cover;
+            margin-bottom: 20px;
         }
 
-        /* 商品卡片样式 */
-        .product-card {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 20px 40px;
-            border-radius: 12px;
-            margin: 15px 0;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .product-price {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        /* 购买按钮样式 */
-        .buy-btn {
-            padding: 14px 35px;
-            background: #00a1ff;
-            color: white;
+        .btn {
+            background: #2d8cf0;
+            color: #fff;
             border: none;
+            padding: 10px 20px;
             border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer; /* 确保是手型 */
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 161, 255, 0.4);
+            cursor: pointer;
+            margin: 5px;
         }
 
-        .buy-btn:hover {
-            background: #0086d9;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 161, 255, 0.6);
+        .pay, .code {
+            display: none;
+            margin-top: 15px;
         }
 
-        .buy-btn:active {
-            transform: translateY(0);
+        .code {
+            background: #111;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .pay-img {
+            max-width: 220px;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 10px;
         }
     </style>
 </head>
+
 <body>
-    <div class="title">四叶草</div>
+    <div class="top-name">虎天寿发卡</div>
+    <div class="container">
+        <h1>四叶草发卡中心</h1>
 
-    <!-- 👇 这里改收款码：把 link 换成你自己的图床链接 -->
-    < img class="qrcode" src="https://i.imgur.com/E6WlpW2.png" alt="收款码">
+        <!-- 商品1 -->
+        <div class="box">
+            <h3>普通发卡</h3>
+            <p>价格：5元</p >
+            <button class="btn" onclick="showPay(1)">立即购买</button>
+            <div class="pay" id="pay1">
+                <p>请扫码支付 5元</p >
+                < img src="https://i.imgur.com/E6WlpW2.png" class="pay-img">
+                <br>
+                <button class="btn" onclick="getCode(1)">已支付，获取卡密</button>
+            </div>
+            <div class="code" id="code1"></div>
+        </div>
 
-    <div class="product-card">
-        <div class="product-price">普通卡密 · 5 元</div>
-        <button class="buy-btn" onclick="alert('普通卡密购买功能开发中~')">立即购买</button>
+        <!-- 商品2 -->
+        <div class="box">
+            <h3>高级发卡</h3>
+            <p>价格：15元</p >
+            <button class="btn" onclick="showPay(2)">立即购买</button>
+            <div class="pay" id="pay2">
+                <p>请扫码支付 15元</p >
+                < img src="https://i.imgur.com/E6WlpW2.png" class="pay-img">
+                <br>
+                <button class="btn" onclick="getCode(2)">已支付，获取卡密</button>
+            </div>
+            <div class="code" id="code2"></div>
+        </div>
+
+        <!-- 商品3 -->
+        <div class="box">
+            <h3>批量发卡</h3>
+            <p>价格：30元</p >
+            <button class="btn" onclick="showPay(3)">立即购买</button>
+            <div class="pay" id="pay3">
+                <p>请扫码支付 30元</p >
+                < img src="https://i.imgur.com/E6WlpW2.png" class="pay-img">
+                <br>
+                <button class="btn" onclick="getCode(3)">已支付，获取卡密</button>
+            </div>
+            <div class="code" id="code3"></div>
+        </div>
     </div>
 
-    <div class="product-card">
-        <div class="product-price">高级卡密 · 15 元</div>
-        <button class="buy-btn" onclick="alert('高级卡密购买功能开发中~')">立即购买</button>
-    </div>
+    <script>
+        // 模拟卡密库（前端演示用）
+        const codes = {
+            1: ["10001-ABCDE", "10002-BCDEF", "10003-CDEFG", "10004-DEFGH"],
+            2: ["VIP001-AABBCC", "VIP002-BBCCDD", "VIP003-CCDDEE"],
+            3: ["PL001-112233", "PL002-223344", "PL003-334455"]
+        };
+
+        const used = {};
+
+        function showPay(id) {
+            document.getElementById('pay' + id).style.display = 'block';
+        }
+
+        function getCode(id) {
+            if (!codes[id] || codes[id].length === 0) {
+                document.getElementById('code' + id).innerText = "卡密：已售罄";
+                document.getElementById('code' + id).style.display = 'block';
+                return;
+            }
+            const code = codes[id].shift();
+            document.getElementById('code' + id).innerText = "卡密：" + code;
+            document.getElementById('code' + id).style.display = 'block';
+        }
+    </script>
 </body>
 </html>
