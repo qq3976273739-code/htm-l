@@ -74,12 +74,36 @@ h3{
 p{
     margin-bottom:10px;
 }
+.disclaimer{
+    background:rgba(0,0,0,0.8);
+    padding:20px;
+    border-radius:12px;
+    margin:30px auto;
+    max-width:800px;
+    font-size:14px;
+    line-height:1.6;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.2);
+}
+.disclaimer strong{
+    color:#ff4d4f;
+}
 </style>
 </head>
 <body>
 
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
+
+    <!-- 免责声明放在最顶部 -->
+    <div class="disclaimer">
+        <p><strong>⚠️ 重要免责声明</strong></p >
+        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
+        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p >
+        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p >
+        <p>4. 点击购买即视为已阅读并同意本声明。</p >
+    </div>
+
     <h1>卡密发卡</h1>
 
     <div class="box">
@@ -88,7 +112,7 @@ p{
         <button class="btn" onclick="showPay(1)">立即购买</button>
         <div class="pay" id="pay1">
             <p>请扫码支付 3元</p >
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(1)">已支付，获取卡密</button>
         </div>
@@ -101,7 +125,7 @@ p{
         <button class="btn" onclick="showPay(2)">立即购买</button>
         <div class="pay" id="pay2">
             <p>请扫码支付 5元</p >
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(2)">已支付，获取卡密</button>
         </div>
@@ -114,7 +138,7 @@ p{
         <button class="btn" onclick="showPay(3)">立即购买</button>
         <div class="pay" id="pay3">
             <p>请扫码支付 10元</p >
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(3)">已支付，获取卡密</button>
         </div>
@@ -127,7 +151,7 @@ p{
         <button class="btn" onclick="showPay(4)">立即购买</button>
         <div class="pay" id="pay4">
             <p>请扫码支付 25元</p >
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/eb09fadb06d42070.png" class="pay-img">
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/eb09fadb06d42070.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(4)">已支付，获取卡密</button>
         </div>
@@ -140,7 +164,7 @@ p{
         <button class="btn" onclick="showPay(5)">立即购买</button>
         <div class="pay" id="pay5">
             <p>请扫码支付 30元</p >
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/f8b34d3adbfdf38f.png" class="pay-img">
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/f8b34d3adbfdf38f.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(5)">已支付，获取卡密</button>
         </div>
@@ -154,6 +178,9 @@ function showPay(id){
 }
 
 function getCode(id){
+    if(!confirm("请确认您已满18周岁，未成年人禁止购买！")){
+        return;
+    }
     alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 </script>
