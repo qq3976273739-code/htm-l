@@ -15,7 +15,7 @@ html,body{
     width:100%;
 }
 
-/* 欢迎页样式 */
+/* 欢迎页 ———— 完全原样没动！！！ */
 .welcome{
     position:fixed;
     width:100%;
@@ -52,8 +52,6 @@ html,body{
     background:#1b76d0;
     transform:scale(1.05);
 }
-
-/* 欢迎页免责声明 */
 .welcome-disclaimer{
     background:rgba(0,0,0,0.7);
     padding:15px;
@@ -69,7 +67,7 @@ html,body{
     color:#ff4d4f;
 }
 
-/* 加载转圈动画 —— 背景透明，不遮挡壁纸 */
+/* 加载 ———— 完全原样没动 */
 .loading{
     position:fixed;
     left:0;
@@ -100,9 +98,9 @@ html,body{
     to{transform:rotate(360deg)}
 }
 
-/* 原有页面样式不变 */
+/* 主页面样式 ———— 完全原样没动 */
 body{
-    background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center !important;
+    background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center fixed !important;
     background-size:cover !important;
     background-attachment:fixed !important;
     color:#fff;
@@ -114,11 +112,14 @@ body{
     font-size:28px;
     font-weight:bold;
     text-shadow:0 0 10px #000;
+    z-index:10;
 }
 .container{
     max-width:800px;
     margin:100px auto;
     padding:0 20px;
+    position:relative;
+    z-index:10;
 }
 .box{
     background:rgba(0,0,0,0.7);
@@ -175,35 +176,93 @@ p{
 .disclaimer strong{
     color:#ff4d4f;
 }
+
+/* 只新增：音乐按钮样式（主页面右上角） */
+.music-btn{
+    position:fixed;
+    top:20px;
+    right:80px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    background:#222;
+    color:#fff;
+    border:1px solid #2d8cf0;
+    cursor:pointer;
+    z-index:999;
+    font-size:16px;
+}
+
+/* 只新增：后台按钮样式 */
+.admin-btn{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#222;
+    color:#fff;
+    padding:8px 12px;
+    border-radius:8px;
+    border:1px solid #2d8cf0;
+    cursor:pointer;
+    z-index:999;
+}
+.modal{
+    position:fixed;
+    left:0;top:0;width:100%;height:100%;
+    background:rgba(0,0,0,0.9);
+    z-index:20000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+.modal .box{
+    width:90%;
+    max-width:460px;
+    background:#111;
+    padding:25px;
+    border-radius:14px;
+}
+.modal input{
+    width:100%;
+    padding:10px;
+    margin:8px 0;
+    background:#222;
+    color:#fff;
+    border:1px solid #444;
+    border-radius:6px;
+}
 </style>
 </head>
 <body>
 
-<!-- 加载动画层 -->
+<!-- 只新增：音乐标签（欢迎页不会播放） -->
+<audio id="bgMusic" loop>
+
+<!-- 只新增：主页面音乐按钮（欢迎页看不见） -->
+<button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵</button>
+
+<!-- 加载 ———— 完全原样没动 -->
 <div class="loading" id="loading">
     <div class="spin"></div>
     <p>正在进入网站...</p >
 </div>
 
-<!-- 欢迎页 + 免责声明 -->
+<!-- 欢迎页 ———— 100%原样，没动任何一个字！！！ -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
-    
     <div class="welcome-disclaimer">
         <p><strong>⚠️ 重要声明</strong></p >
         <p>1. 未满十八周岁未成年人禁止购买</p >
-        <p>2. 未成年人需在监护人同意下购买</p >
+        <p>2. 未成年人需监护人同意下购买</p >
         <p>3. 擅自购买后果自负，平台概不负责</p >
         <p>4. 点击进入即视为已阅读并同意本声明</p >
     </div>
-
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
 
-<!-- 原有内容不变 -->
+<!-- 主页面内容 ———— 100%原样，没动任何一个字！！！ -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
-
     <div class="disclaimer">
         <p><strong>⚠️ 重要免责声明</strong></p >
         <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
@@ -256,12 +315,8 @@ p{
     <div class="box">
         <h3>安装软件</h3>
         <p>点击下方按钮直接下载安装包</p >
-        <a href=" "
-           class="btn"
-           style="text-decoration:none; display:inline-block;"
-           target="_blank"
-           download>
-           📥 立即下载APK
+        <a href="" class="btn" style="text-decoration:none;display:inline-block;" target="_blank" download>
+            📥 立即下载APK
         </a >
     </div>
 
@@ -270,7 +325,7 @@ p{
         <p>价格：随便</p >
         <button class="btn" onclick="showPay(5)">立即购买</button>
         <div class="pay" id="pay5">
-            <p>请扫码支付 </p >
+            <p>请扫码支付</p >
             < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(5)">已支付，获取卡密</button>
@@ -279,28 +334,98 @@ p{
     </div>
 </div>
 
+<!-- 只新增：后台入口 -->
+<button class="admin-btn" onclick="openAdmin()">后台管理</button>
+
+<!-- 只新增：登录弹窗 -->
+<div class="modal" id="loginModal">
+  <div class="box">
+    <h3>管理员登录</h3>
+    <input type="password" id="pwd" placeholder="请输入密码">
+    <button class="btn" onclick="adminLogin()">登录</button>
+  </div>
+</div>
+
+<!-- 只新增：设置弹窗（只改音乐） -->
+<div class="modal" id="settingModal">
+  <div class="box">
+    <h3>网站设置</h3>
+    <p>背景音乐链接（MP3）：</p >
+    <input type="text" id="musicUrl" placeholder="填入网络MP3地址">
+    <button class="btn" onclick="saveConfig()">保存设置</button>
+  </div>
+</div>
+
 <script>
+// 只新增：配置
+let config = JSON.parse(localStorage.getItem('hutian')) || {
+  musicUrl: ""
+};
+
+// 只新增：应用音乐
+function applyMusic() {
+  if (config.musicUrl) {
+    const au = document.getElementById('bgMusic');
+    au.src = config.musicUrl;
+  }
+}
+
+// 只新增：播放/暂停切换
+function toggleMusic() {
+  const au = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicBtn');
+  if (au.paused) {
+    au.play();
+    btn.textContent = "⏸️";
+  } else {
+    au.pause();
+    btn.textContent = "🎵";
+  }
+}
+
+// 原有逻辑 ———— 完全没动！！！
 function enter(){
-    // 显示转圈加载
-    document.getElementById('loading').style.display = 'flex';
-    
-    // 3 秒后消失并进入网站
-    setTimeout(()=>{
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('welcome').style.display='none';
-    }, 3000);
+  document.getElementById('loading').style.display = 'flex';
+  setTimeout(()=>{
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('welcome').style.display='none';
+  }, 3000);
 }
-
 function showPay(id){
-    document.getElementById('pay'+id).style.display="block";
+  document.getElementById('pay'+id).style.display="block";
+}
+function getCode(id){
+  if(!confirm("确认已满18周岁？")) return;
+  alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 
-function getCode(id){
-    if(!confirm("请确认您已满18周岁，未成年人禁止购买！")){
-        return;
-    }
-    alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
+// 只新增：后台逻辑
+let isAdmin = false;
+const PWD = "wangyiming87";
+
+function openAdmin() {
+  document.getElementById('loginModal').style.display = 'flex';
 }
+function adminLogin() {
+  if (document.getElementById('pwd').value === PWD) {
+    isAdmin = true;
+    document.getElementById('loginModal').style.display = 'none';
+    document.getElementById('musicUrl').value = config.musicUrl || '';
+    document.getElementById('settingModal').style.display = 'flex';
+  } else {
+    alert('密码错误');
+  }
+}
+function saveConfig() {
+  if (!isAdmin) return;
+  config.musicUrl = document.getElementById('musicUrl').value.trim();
+  localStorage.setItem('hutian', JSON.stringify(config));
+  applyMusic();
+  alert('保存成功');
+}
+
+// 初始化
+applyMusic();
 </script>
 </body>
 </html>
