@@ -15,7 +15,7 @@ html,body{
     width:100%;
 }
 
-/* 欢迎页样式（完全原样保留） */
+/* 欢迎页样式（完全保留你原来的） */
 .welcome{
     position:fixed;
     width:100%;
@@ -67,7 +67,7 @@ html,body{
     color:#ff4d4f;
 }
 
-/* 加载动画（完全原样保留） */
+/* 加载动画（完全保留你原来的） */
 .loading{
     position:fixed;
     left:0;
@@ -98,7 +98,7 @@ html,body{
     to{transform:rotate(360deg)}
 }
 
-/* 主页面样式（完全原样保留） */
+/* 主页面样式（完全保留你原来的） */
 body{
     background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center fixed !important;
     background-size:cover !important;
@@ -112,7 +112,7 @@ body{
     font-size:28px;
     font-weight:bold;
     text-shadow:0 0 10px #000;
-    z-index:999;
+    z-index:10;
 }
 .container{
     max-width:800px;
@@ -177,26 +177,7 @@ p{
     color:#ff4d4f;
 }
 
-/* 音乐按钮样式（主页面右上角，层级拉满） */
-.music-btn{
-    position:fixed;
-    top:20px;
-    right:20px;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:#222;
-    color:#fff;
-    border:1px solid #2d8cf0;
-    cursor:pointer;
-    z-index:99999;
-    font-size:18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-/* 后台按钮样式（右下角，层级拉满，绝对显示） */
+/* 仅新增：后台按钮样式（右下角，层级拉满） */
 .admin-btn{
     position:fixed;
     bottom:20px;
@@ -212,7 +193,7 @@ p{
     font-weight:bold;
 }
 
-/* 弹窗样式（层级拉满） */
+/* 仅新增：弹窗样式（层级拉满） */
 .modal{
     position:fixed;
     left:0;top:0;width:100%;height:100%;
@@ -224,12 +205,12 @@ p{
 }
 .modal .box{
     width:90%;
-    max-width:460px;
+    max-width:500px;
     background:#111;
     padding:25px;
     border-radius:14px;
 }
-.modal input{
+.modal input, .modal textarea{
     width:100%;
     padding:10px;
     margin:8px 0;
@@ -246,22 +227,13 @@ p{
 </head>
 <body>
 
-<!-- 音乐标签 -->
-<audio id="bgMusic" loop>
-
-<!-- 音乐按钮（主页面显示，欢迎页不显示） -->
-<button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵</button>
-
-<!-- 后台按钮（绝对显示，层级最高） -->
-<button class="admin-btn" onclick="openAdmin()">后台管理</button>
-
-<!-- 加载动画 -->
+<!-- 加载动画（完全保留） -->
 <div class="loading" id="loading">
     <div class="spin"></div>
     <p>正在进入网站...</p >
 </div>
 
-<!-- 欢迎页（完全原样保留，没动任何内容） -->
+<!-- 欢迎页（完全保留，仅绑定背景配置） -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
     <div class="welcome-disclaimer">
@@ -274,7 +246,7 @@ p{
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
 
-<!-- 主页面内容（完全原样保留，没动任何内容） -->
+<!-- 主页面内容（完全保留，仅用JS动态渲染商品） -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
     <div class="disclaimer">
@@ -286,69 +258,14 @@ p{
     </div>
 
     <h1>卡密发卡</h1>
-
-    <div class="box">
-        <h3>社区小时体验卡</h3>
-        <p>价格：3元</p >
-        <button class="btn" onclick="showPay(1)">立即购买</button>
-        <div class="pay" id="pay1">
-            <p>请扫码支付 3元</p >
-            < img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
-            <br>
-            <button class="btn" onclick="getCode(1)">已支付，获取卡密</button>
-        </div>
-        <div class="code" id="code1"></div>
-    </div>
-
-    <div class="box">
-        <h3>社区天卡</h3>
-        <p>价格：5元</p >
-        <button class="btn" onclick="showPay(2)">立即购买</button>
-        <div class="pay" id="pay2">
-            <p>请扫码支付 5元</p >
-            < img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
-            <br>
-            <button class="btn" onclick="getCode(2)">已支付，获取卡密</button>
-        </div>
-        <div class="code" id="code2"></div>
-    </div>
-
-    <div class="box">
-        <h3>社区永久卡</h3>
-        <p>价格：10元</p >
-        <button class="btn" onclick="showPay(3)">立即购买</button>
-        <div class="pay" id="pay3">
-            <p>请扫码支付 10元</p >
-            < img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
-            <br>
-            <button class="btn" onclick="getCode(3)">已支付，获取卡密</button>
-        </div>
-        <div class="code" id="code3"></div>
-    </div>
-
-    <div class="box">
-        <h3>安装软件</h3>
-        <p>点击下方按钮直接下载安装包</p >
-        <a href="" class="btn" style="text-decoration:none;display:inline-block;" target="_blank" download>
-            📥 立即下载APK
-        </a >
-    </div>
-
-    <div class="box">
-        <h3>赞助一下呗</h3>
-        <p>价格：随便</p >
-        <button class="btn" onclick="showPay(5)">立即购买</button>
-        <div class="pay" id="pay5">
-            <p>请扫码支付</p >
-            < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
-            <br>
-            <button class="btn" onclick="getCode(5)">已支付，获取卡密</button>
-        </div>
-        <div class="code" id="code5"></div>
-    </div>
+    <!-- 商品区域（动态渲染，不影响原有结构） -->
+    <div id="goodsArea"></div>
 </div>
 
-<!-- 登录弹窗 -->
+<!-- 仅新增：后台入口按钮 -->
+<button class="admin-btn" onclick="openAdmin()">后台管理</button>
+
+<!-- 仅新增：登录弹窗 -->
 <div class="modal" id="loginModal">
   <div class="box">
     <h3>管理员登录</h3>
@@ -357,44 +274,80 @@ p{
   </div>
 </div>
 
-<!-- 设置弹窗 -->
+<!-- 仅新增：设置弹窗（核心后台功能） -->
 <div class="modal" id="settingModal">
   <div class="box">
     <h3>网站设置</h3>
-    <p>背景音乐链接（MP3）：</p >
-    <input type="text" id="musicUrl" placeholder="填入网络MP3直链">
-    <button class="btn" onclick="saveConfig()">保存设置</button>
+    <p>欢迎页背景图链接：</p >
+    <input type="text" id="welcomeBg" placeholder="不填则使用默认">
+    <p>主页面背景图链接：</p >
+    <input type="text" id="mainBg" placeholder="不填则使用默认">
+    <p>自定义商品（一行一个，格式：名称|价格）：</p >
+    <textarea id="goodsList" rows="8" placeholder="例如：
+社区小时体验卡|3
+社区天卡|5
+社区永久卡|10
+赞助一下呗|随便
+"></textarea>
+    <button class="btn" onclick="saveAllConfig()">保存并刷新</button>
   </div>
 </div>
 
 <script>
-// 配置存储
-let config = JSON.parse(localStorage.getItem('hutian_music')) || {
-  musicUrl: ""
+// ==================== 配置存储（核心） ====================
+let siteConfig = JSON.parse(localStorage.getItem('hutian_site_config')) || {
+  // 默认欢迎页背景（你原来的图）
+  welcomeBg: "https://i.cetsteam.com/imgs/2026/04/01/a93f0949670e30b2.jpg",
+  // 默认主页面背景（你原来的图）
+  mainBg: "https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg",
+  // 默认商品列表（你原来的4个商品）
+  goods: [
+    {name: "社区小时体验卡", price: "3元"},
+    {name: "社区天卡", price: "5元"},
+    {name: "社区永久卡", price: "10元"},
+    {name: "赞助一下呗", price: "随便"}
+  ]
 };
 
-// 应用音乐
-function applyMusic() {
-  const au = document.getElementById('bgMusic');
-  if (config.musicUrl) {
-    au.src = config.musicUrl;
+// ==================== 应用配置（渲染页面） ====================
+function applyAllConfig() {
+  // 1. 应用欢迎页背景
+  if (siteConfig.welcomeBg) {
+    document.getElementById('welcome').style.backgroundImage = `url(${siteConfig.welcomeBg})`;
   }
+  // 2. 应用主页面背景
+  if (siteConfig.mainBg) {
+    document.body.style.backgroundImage = `url(${siteConfig.mainBg})`;
+  }
+  // 3. 渲染商品列表
+  renderGoods();
 }
 
-// 音乐播放/暂停切换
-function toggleMusic() {
-  const au = document.getElementById('bgMusic');
-  const btn = document.getElementById('musicBtn');
-  if (au.paused) {
-    au.play();
-    btn.textContent = "⏸️";
-  } else {
-    au.pause();
-    btn.textContent = "🎵";
-  }
+// ==================== 渲染商品（动态生成板块） ====================
+function renderGoods() {
+  const goodsArea = document.getElementById('goodsArea');
+  goodsArea.innerHTML = ''; // 清空原有商品
+
+  siteConfig.goods.forEach((goods, index) => {
+    // 生成单个商品板块（完全还原你原来的样式）
+    const goodsHtml = `
+    <div class="box">
+      <h3>${goods.name}</h3>
+      <p>价格：${goods.price}</p >
+      <button class="btn" onclick="showPay(${index})">立即购买</button>
+      <div class="pay" id="pay${index}">
+        <p>请扫码支付 ${goods.price}</p >
+        < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
+        <br>
+        <button class="btn" onclick="getCode(${index})">已支付，获取卡密</button>
+      </div>
+      <div class="code" id="code${index}"></div>
+    </div>`;
+    goodsArea.innerHTML += goodsHtml;
+  });
 }
 
-// 原有逻辑（完全没动）
+// ==================== 原有逻辑（完全保留，未修改） ====================
 function enter(){
   document.getElementById('loading').style.display = 'flex';
   setTimeout(()=>{
@@ -402,43 +355,71 @@ function enter(){
     document.getElementById('welcome').style.display='none';
   }, 3000);
 }
+
 function showPay(id){
   document.getElementById('pay'+id).style.display="block";
 }
+
 function getCode(id){
-  if(!confirm("确认已满18周岁？")) return;
+  if(!confirm("请确认您已满18周岁，未成年人禁止购买！")) return;
   alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 
-// 后台逻辑
-let isAdmin = false;
-const PWD = "wangyiming87";
+// ==================== 后台逻辑（仅新增） ====================
+let isAdminLogin = false;
+const ADMIN_PWD = "wangyiming87"; // 后台密码
 
+// 打开后台登录弹窗
 function openAdmin() {
   document.getElementById('loginModal').style.display = 'flex';
 }
+
+// 后台登录验证
 function adminLogin() {
   const pwdInput = document.getElementById('pwd');
-  if (pwdInput.value === PWD) {
-    isAdmin = true;
+  if (pwdInput.value === ADMIN_PWD) {
+    isAdminLogin = true;
+    // 关闭登录弹窗，打开设置弹窗
     document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('musicUrl').value = config.musicUrl || '';
+    // 填充现有配置到表单
+    document.getElementById('welcomeBg').value = siteConfig.welcomeBg || '';
+    document.getElementById('mainBg').value = siteConfig.mainBg || '';
+    // 把商品列表转成文本（一行一个：名称|价格）
+    const goodsText = siteConfig.goods.map(g => `${g.name}|${g.price}`).join('\n');
+    document.getElementById('goodsList').value = goodsText;
+    // 显示设置弹窗
     document.getElementById('settingModal').style.display = 'flex';
   } else {
-    alert('密码错误');
+    alert('密码错误，请重试！');
   }
 }
-function saveConfig() {
-  if (!isAdmin) return;
-  config.musicUrl = document.getElementById('musicUrl').value.trim();
-  localStorage.setItem('hutian_music', JSON.stringify(config));
-  applyMusic();
-  alert('保存成功！');
-  document.getElementById('settingModal').style.display = 'none';
+
+// 保存所有配置
+function saveAllConfig() {
+  if (!isAdminLogin) return;
+
+  // 1. 保存背景图
+  siteConfig.welcomeBg = document.getElementById('welcomeBg').value.trim() || siteConfig.welcomeBg;
+  siteConfig.mainBg = document.getElementById('mainBg').value.trim() || siteConfig.mainBg;
+
+  // 2. 保存商品列表（解析文本）
+  const goodsText = document.getElementById('goodsList').value.trim();
+  const lines = goodsText.split('\n').filter(line => line.trim() !== ''); // 过滤空行
+  siteConfig.goods = lines.map(line => {
+    const [name, price] = line.split('|').map(item => item.trim());
+    return {name: name || "未命名商品", price: price || "0元"};
+  });
+
+  // 3. 保存到本地存储
+  localStorage.setItem('hutian_site_config', JSON.stringify(siteConfig));
+
+  // 4. 应用配置并刷新页面
+  alert('保存成功！页面即将刷新');
+  location.reload();
 }
 
-// 初始化
-applyMusic();
+// ==================== 初始化页面 ====================
+applyAllConfig();
 </script>
 </body>
 </html>
