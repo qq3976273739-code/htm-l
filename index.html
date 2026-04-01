@@ -46,6 +46,11 @@ html,body{
     border-radius:12px;
     cursor:pointer;
     margin-top:20px;
+    transition:all 0.3s;
+}
+.enter-btn:hover{
+    background:#1b76d0;
+    transform:scale(1.05);
 }
 
 /* 欢迎页免责声明 */
@@ -62,6 +67,37 @@ html,body{
 }
 .welcome-disclaimer strong{
     color:#ff4d4f;
+}
+
+/* 加载转圈动画 —— 背景透明，不遮挡壁纸 */
+.loading{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    color:#fff;
+    font-size:18px;
+    flex-direction:column;
+    gap:20px;
+    text-shadow:0 0 10px #000;
+}
+.spin{
+    width:40px;
+    height:40px;
+    border:4px solid #2d8cf0;
+    border-top:4px solid transparent;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
 }
 
 /* 原有页面样式不变 */
@@ -142,6 +178,12 @@ p{
 </style>
 </head>
 <body>
+
+<!-- 加载动画层 -->
+<div class="loading" id="loading">
+    <div class="spin"></div>
+    <p>正在进入网站...</p >
+</div>
 
 <!-- 欢迎页 + 免责声明 -->
 <div class="welcome" id="welcome">
@@ -239,11 +281,20 @@ p{
 
 <script>
 function enter(){
-    document.getElementById('welcome').style.display='none';
+    // 显示转圈加载
+    document.getElementById('loading').style.display = 'flex';
+    
+    // 3 秒后消失并进入网站
+    setTimeout(()=>{
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('welcome').style.display='none';
+    }, 3000);
 }
+
 function showPay(id){
     document.getElementById('pay'+id).style.display="block";
 }
+
 function getCode(id){
     if(!confirm("请确认您已满18周岁，未成年人禁止购买！")){
         return;
