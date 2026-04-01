@@ -4,324 +4,302 @@
 <meta charset="UTF-8">
 <title>虎天寿发卡</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:微软雅黑,sans-serif;}
-  html,body{height:100%;width:100%;color:#fff;}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:微软雅黑,sans-serif;
+}
+html,body{
+    height:100%;
+    width:100%;
+}
 
-  /* 动态视频背景 */
-  .video-bg{
-    position:fixed; top:0; left:0; width:100%; height:100%;
-    object-fit:cover; z-index:-2; filter:brightness(0.6);
-  }
-  .overlay{position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:-1;}
+/* 欢迎页样式 */
+.welcome{
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:999;
+    background:url("https://i.cetsteam.com/imgs/2026/04/01/a93f0949670e30b2.jpg") no-repeat center center fixed;
+    background-size:cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:0 20px;
+}
+.welcome h1{
+    color:#fff;
+    font-size:42px;
+    margin-bottom:20px;
+    text-shadow:0 0 10px #000;
+}
+.enter-btn{
+    background:#2d8cf0;
+    color:#fff;
+    border:none;
+    padding:15px 40px;
+    font-size:20px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-top:20px;
+    transition:all 0.3s;
+}
+.enter-btn:hover{
+    background:#1b76d0;
+    transform:scale(1.05);
+}
 
-  /* 音乐控制面板 */
-  .music-controls{position:fixed;top:20px;right:20px;z-index:999;display:none;}
-  #musicToggle{width:44px;height:44px;border-radius:50%;background:#2d8cf0;color:#fff;border:none;font-size:18px;cursor:pointer;}
-  #musicSelect{padding:8px 12px;border-radius:8px;background:#222;color:#fff;border:1px solid #2d8cf0;margin-left:8px;}
+/* 欢迎页免责声明 */
+.welcome-disclaimer{
+    background:rgba(0,0,0,0.7);
+    padding:15px;
+    border-radius:10px;
+    max-width:500px;
+    color:#fff;
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.2);
+}
+.welcome-disclaimer strong{
+    color:#ff4d4f;
+}
 
-  /* 欢迎页 */
-  .welcome{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:0 20px;z-index:998;}
-  .welcome h1{font-size:42px;text-shadow:0 0 10px #000;margin-bottom:20px;}
-  .enter-btn{padding:15px 40px;background:#2d8cf0;color:#fff;border:none;border-radius:12px;font-size:20px;cursor:pointer;margin-top:20px;}
-  .welcome-disclaimer{background:rgba(0,0,0,0.7);padding:15px;border-radius:10px;max-width:500px;font-size:12px;text-align:center;}
-  .welcome-disclaimer strong{color:#ff4d4f;}
+/* 加载转圈动画 —— 背景透明，不遮挡壁纸 */
+.loading{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:transparent;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    color:#fff;
+    font-size:18px;
+    flex-direction:column;
+    gap:20px;
+    text-shadow:0 0 10px #000;
+}
+.spin{
+    width:40px;
+    height:40px;
+    border:4px solid #2d8cf0;
+    border-top:4px solid transparent;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+@keyframes spin{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+}
 
-  /* 加载动画 */
-  .loading{position:fixed;left:0;top:0;width:100%;height:100%;background:transparent;display:none;align-items:center;justify-content:center;z-index:1000;flex-direction:column;gap:16px;}
-  .spin{width:40px;height:40px;border:4px solid #2d8cf0;border-top:4px solid transparent;border-radius:50%;animation:spin 1s linear infinite;}
-  @keyframes spin{to{transform:rotate(360deg);}}
-
-  /* 主页面样式 */
-  .top-name{position:fixed;top:20px;left:30px;font-size:28px;text-shadow:0 0 10px #000;z-index:10;}
-  .container{max-width:800px;margin:100px auto;padding:0 20px;position:relative;z-index:10;}
-  .box{background:rgba(0,0,0,0.7);padding:30px;border-radius:16px;margin-bottom:20px;}
-  .btn{background:#2d8cf0;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;margin:5px;}
-  .pay{display:none;margin-top:15px;}
-  .disclaimer{background:rgba(0,0,0,0.8);padding:20px;border-radius:12px;text-align:center;font-size:14px;line-height:1.6;}
-
-  /* 后台入口 */
-  .admin-open{position:fixed;bottom:20px;right:20px;z-index:999;}
-  #adminBtn{padding:8px 16px;background:#222;color:#fff;border:1px solid #2d8cf0;border-radius:8px;cursor:pointer;}
-
-  /* 弹窗样式 */
-  .modal{position:fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);display:none;align-items:center;justify-content:center;z-index:1001;}
-  .modal-box{background:#111;padding:30px;border-radius:12px;width:90%;max-width:500px;}
-  .modal-box h3{margin-bottom:20px;text-align:center;}
-  .modal-box input,.modal-box textarea{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:none;background:#222;color:#fff;}
-  .modal-box button{padding:10px 20px;background:#2d8cf0;color:#fff;border:none;border-radius:8px;margin-top:10px;width:100%;cursor:pointer;}
-  .close{text-align:right;cursor:pointer;color:#aaa;}
-
-  /* 防破解加固 */
-  .no-select{user-select:none;}
+/* 原有页面样式不变 */
+body{
+    background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center !important;
+    background-size:cover !important;
+    background-attachment:fixed !important;
+    color:#fff;
+}
+.top-name{
+    position:fixed;
+    top:20px;
+    left:30px;
+    font-size:28px;
+    font-weight:bold;
+    text-shadow:0 0 10px #000;
+}
+.container{
+    max-width:800px;
+    margin:100px auto;
+    padding:0 20px;
+}
+.box{
+    background:rgba(0,0,0,0.7);
+    padding:30px;
+    border-radius:16px;
+    margin-bottom:20px;
+}
+.btn{
+    background:#2d8cf0;
+    color:#fff;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px;
+}
+.pay,.code{
+    display:none;
+    margin-top:15px;
+}
+.code{
+    background:#111;
+    color:#0f0;
+    padding:15px;
+    border-radius:8px;
+    font-size:16px;
+}
+.pay-img{
+    max-width:220px;
+    border-radius:10px;
+    margin-top:10px;
+}
+h1{
+    text-align:center;
+    margin-bottom:30px;
+}
+h3{
+    margin-bottom:10px;
+}
+p{
+    margin-bottom:10px;
+}
+.disclaimer{
+    background:rgba(0,0,0,0.8);
+    padding:20px;
+    border-radius:12px;
+    margin:30px auto;
+    max-width:800px;
+    font-size:14px;
+    line-height:1.6;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.2);
+}
+.disclaimer strong{
+    color:#ff4d4f;
+}
 </style>
 </head>
-<body class="no-select">
+<body>
 
-<!-- 动态视频背景（已填好你的链接） -->
-<video class="video-bg" autoplay muted loop playsinline>
-  <source src="https://github.com/qq3976273739-code/htm-l/releases/download/bg/default.mp4" type="video/mp4">
-</video>
-<div class="overlay"></div>
-
-<!-- 音乐控制 -->
-<div class="music-controls" id="musicArea">
-  <button id="musicToggle" onclick="toggleMusic()">🔊</button>
-  <select id="musicSelect" onchange="changeMusic()"></select>
-</div>
-
-<!-- 加载动画 -->
+<!-- 加载动画层 -->
 <div class="loading" id="loading">
-  <div class="spin"></div>
-  <p>正在进入网站...</p >
+    <div class="spin"></div>
+    <p>正在进入网站...</p >
 </div>
 
-<!-- 欢迎页 -->
+<!-- 欢迎页 + 免责声明 -->
 <div class="welcome" id="welcome">
-  <h1>虎天寿发卡</h1>
-  <div class="welcome-disclaimer">
-    <p><strong>⚠️ 重要声明</strong></p >
-    <p>1. 未满十八周岁未成年人禁止购买</p >
-    <p>2. 未成年人需监护人同意方可购买</p >
-    <p>3. 擅自购买后果自负，平台概不负责</p >
-    <p>4. 点击进入即视为已阅读并同意本声明</p >
-  </div>
-  <button class="enter-btn" onclick="enter()">进入发卡网站</button>
+    <h1>虎天寿发卡</h1>
+    
+    <div class="welcome-disclaimer">
+        <p><strong>⚠️ 重要声明</strong></p >
+        <p>1. 未满十八周岁未成年人禁止购买</p >
+        <p>2. 未成年人需在监护人同意下购买</p >
+        <p>3. 擅自购买后果自负，平台概不负责</p >
+        <p>4. 点击进入即视为已阅读并同意本声明</p >
+    </div>
+
+    <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
 
-<!-- 主内容 -->
+<!-- 原有内容不变 -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
-  <div class="disclaimer">
-    <p><strong>⚠️ 重要免责声明</strong></p >
-    <p>1. 本平台所有卡密商品，未满十八周岁禁止购买。</p >
-    <p>2. 未成年人需在监护人同意下购买。</p >
-    <p>3. 一切后果自行承担，平台概不负责。</p >
-    <p>4. 点击购买即视为已阅读并同意本声明。</p >
-  </div>
 
-  <h1 style="text-align:center;margin:30px 0;">卡密发卡</h1>
-
-  <div class="box">
-    <h3>社区小时体验卡</h3><p>价格：3元</p >
-    <button class="btn" onclick="show(1)">立即购买</button>
-    <div class="pay" id="pay1">
-      <p>请扫码支付 3元</p >
-      < img src="https://i.cetsteam.com/imgs/2026/03/31/626c9284b3a368c1.png" style="max-width:200px;margin:10px 0;">
-      <button class="btn" onclick="getCode()">已支付，获取卡密</button>
+    <div class="disclaimer">
+        <p><strong>⚠️ 重要免责声明</strong></p >
+        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
+        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p >
+        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p >
+        <p>4. 点击购买即视为已阅读并同意本声明。</p >
     </div>
-  </div>
 
-  <div class="box">
-    <h3>社区天卡</h3><p>价格：5元</p >
-    <button class="btn" onclick="show(2)">立即购买</button>
-    <div class="pay" id="pay2">
-      <p>请扫码支付 5元</p >
-      < img src="https://i.cetsteam.com/imgs/2026/03/31/626c9284b3a368c1.png" style="max-width:200px;margin:10px 0;">
-      <button class="btn" onclick="getCode()">已支付，获取卡密</button>
+    <h1>卡密发卡</h1>
+
+    <div class="box">
+        <h3>社区小时体验卡</h3>
+        <p>价格：3元</p >
+        <button class="btn" onclick="showPay(1)">立即购买</button>
+        <div class="pay" id="pay1">
+            <p>请扫码支付 3元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
+            <br>
+            <button class="btn" onclick="getCode(1)">已支付，获取卡密</button>
+        </div>
+        <div class="code" id="code1"></div>
     </div>
-  </div>
 
-  <div class="box">
-    <h3>社区永久卡</h3><p>价格：10元</p >
-    <button class="btn" onclick="show(3)">立即购买</button>
-    <div class="pay" id="pay3">
-      <p>请扫码支付 10元</p >
-      < img src="https://i.cetsteam.com/imgs/2026/03/31/626c9284b3a368c1.png" style="max-width:200px;margin:10px 0;">
-      <button class="btn" onclick="getCode()">已支付，获取卡密</button>
+    <div class="box">
+        <h3>社区天卡</h3>
+        <p>价格：5元</p >
+        <button class="btn" onclick="showPay(2)">立即购买</button>
+        <div class="pay" id="pay2">
+            <p>请扫码支付 5元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
+            <br>
+            <button class="btn" onclick="getCode(2)">已支付，获取卡密</button>
+        </div>
+        <div class="code" id="code2"></div>
     </div>
-  </div>
 
-  <div class="box">
-    <h3>APP下载</h3>
-    <a href=" " target="_blank" class="btn" style="text-decoration:none;color:#fff;">下载APK安装包</a >
-  </div>
+    <div class="box">
+        <h3>社区永久卡</h3>
+        <p>价格：10元</p >
+        <button class="btn" onclick="showPay(3)">立即购买</button>
+        <div class="pay" id="pay3">
+            <p>请扫码支付 10元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
+            <br>
+            <button class="btn" onclick="getCode(3)">已支付，获取卡密</button>
+        </div>
+        <div class="code" id="code3"></div>
+    </div>
+
+    <div class="box">
+        <h3>安装软件</h3>
+        <p>点击下方按钮直接下载安装包</p >
+        <a href=" "
+           class="btn"
+           style="text-decoration:none; display:inline-block;"
+           target="_blank"
+           download>
+           📥 立即下载APK
+        </a >
+    </div>
+
+    <div class="box">
+        <h3>赞助一下呗</h3>
+        <p>价格：随便</p >
+        <button class="btn" onclick="showPay(5)">立即购买</button>
+        <div class="pay" id="pay5">
+            <p>请扫码支付 </p >
+            < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
+            <br>
+            <button class="btn" onclick="getCode(5)">已支付，获取卡密</button>
+        </div>
+        <div class="code" id="code5"></div>
+    </div>
 </div>
-
-<!-- 后台入口 -->
-<div class="admin-open">
-  <button id="adminBtn" onclick="tryOpenAdmin()">后台管理</button>
-</div>
-
-<!-- 后台登录弹窗 -->
-<div class="modal" id="adminModal">
-  <div class="modal-box">
-    <div class="close" onclick="closeAdmin()">×</div>
-    <h3>管理员登录</h3>
-    <input type="password" id="adminPwd" placeholder="请输入管理员密码">
-    <button onclick="adminLogin()">登录</button>
-  </div>
-</div>
-
-<!-- 后台设置弹窗 -->
-<div class="modal" id="settingModal">
-  <div class="modal-box">
-    <div class="close" onclick="closeSetting()">×</div>
-    <h3>网站设置</h3>
-    <p>主页面视频壁纸链接：</p >
-    <input type="text" id="bgUrl" placeholder="https://">
-    <p>欢迎页壁纸链接：</p >
-    <input type="text" id="welcomeBgUrl" placeholder="https://">
-    <p>音乐列表（一行一个，格式：歌名|链接）：</p >
-    <textarea id="musicList" rows="6" placeholder="例如：BGM1|https://xxx.mp3"></textarea>
-    <button onclick="saveSetting()">保存设置</button>
-  </div>
-</div>
-
-<audio id="bgm" loop>
 
 <script>
-// ====================== 防破解加固 ======================
-// 禁止右键
-document.oncontextmenu = () => false;
-// 禁止调试快捷键
-document.onkeydown = (e) => {
-  if (
-    e.key === 'F12' ||
-    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
-    (e.ctrlKey && e.key === 'U')
-  ) {
-    return false;
-  }
-};
-// 防控制台调试
-setInterval(() => {
-  const start = performance.now();
-  debugger;
-  if (performance.now() - start > 100) {
-    window.location = 'about:blank';
-  }
-}, 1000);
-// 防iframe嵌套
-if (window.self !== window.top) window.top.location = window.location;
-
-// ====================== 核心配置 ======================
-const ADMIN_PASSWORD = "wangyiming87";
-let isAdminVerified = false;
-
-let config = JSON.parse(localStorage.getItem('siteConfig')) || {
-  bgUrl: "https://github.com/qq3976273739-code/htm-l/releases/download/bg/default.mp4",
-  welcomeBgUrl: "https://i.cetsteam.com/imgs/2026/03/31/626c9284b3a368c1.png",
-  musicList: `默认音乐|https://www.example.com/bgm.mp3`
-};
-
-// 初始化视频背景
-document.querySelector('.video-bg source').src = config.bgUrl;
-document.querySelector('.video-bg').load();
-document.querySelector('.welcome').style.backgroundImage = `url(${config.welcomeBgUrl})`;
-
-let audio = document.getElementById('bgm');
-let isPlaying = false;
-
-// 加载音乐列表
-function loadMusic(){
-  const select = document.getElementById('musicSelect');
-  select.innerHTML = '';
-  const lines = config.musicList.split('\n').filter(i => i.trim());
-  lines.forEach(line => {
-    const [name, url] = line.split('|');
-    if(name && url){
-      const opt = document.createElement('option');
-      opt.value = url;
-      opt.textContent = name;
-      select.appendChild(opt);
-    }
-  });
-  if(lines.length > 0) audio.src = lines[0].split('|')[1];
-}
-loadMusic();
-
-// 进入网站
 function enter(){
-  document.getElementById('loading').style.display = 'flex';
-  setTimeout(() => {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('welcome').style.display = 'none';
-    document.getElementById('musicArea').style.display = 'flex';
-    audio.play().catch(() => {});
-    isPlaying = true;
-  }, 3000);
+    // 显示转圈加载
+    document.getElementById('loading').style.display = 'flex';
+    
+    // 3 秒后消失并进入网站
+    setTimeout(()=>{
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('welcome').style.display='none';
+    }, 3000);
 }
 
-// 音乐控制
-function toggleMusic(){
-  if(isPlaying){
-    audio.pause();
-    document.getElementById('musicToggle').textContent = '🔇';
-    isPlaying = false;
-  }else{
-    audio.play();
-    document.getElementById('musicToggle').textContent = '🔊';
-    isPlaying = true;
-  }
+function showPay(id){
+    document.getElementById('pay'+id).style.display="block";
 }
 
-function changeMusic(){
-  audio.src = document.getElementById('musicSelect').value;
-  audio.play();
-  isPlaying = true;
-  document.getElementById('musicToggle').textContent = '🔊';
-}
-
-// 支付面板
-function show(id){
-  document.getElementById('pay'+id).style.display = 'block';
-}
-function getCode(){
-  alert('支付成功！请截图联系QQ：3976273739 领取卡密');
-}
-
-// 后台防跳过
-function tryOpenAdmin(){
-  if(isAdminVerified){
-    showSetting();
-  }else{
-    showAdmin();
-  }
-}
-function showAdmin(){
-  document.getElementById('adminModal').style.display = 'flex';
-}
-function closeAdmin(){
-  document.getElementById('adminModal').style.display = 'none';
-}
-function showSetting(){
-  if(!isAdminVerified) return;
-  document.getElementById('settingModal').style.display = 'flex';
-}
-function closeSetting(){
-  document.getElementById('settingModal').style.display = 'none';
-}
-
-// 后台登录
-function adminLogin(){
-  const pwd = document.getElementById('adminPwd').value;
-  if(pwd === ADMIN_PASSWORD){
-    isAdminVerified = true;
-    closeAdmin();
-    // 加载配置到表单
-    document.getElementById('bgUrl').value = config.bgUrl;
-    document.getElementById('welcomeBgUrl').value = config.welcomeBgUrl;
-    document.getElementById('musicList').value = config.musicList;
-    showSetting();
-  }else{
-    alert('密码错误');
-  }
-}
-
-// 保存设置
-function saveSetting(){
-  if(!isAdminVerified) return;
-  config.bgUrl = document.getElementById('bgUrl').value;
-  config.welcomeBgUrl = document.getElementById('welcomeBgUrl').value;
-  config.musicList = document.getElementById('musicList').value;
-  localStorage.setItem('siteConfig', JSON.stringify(config));
-  // 更新视频背景
-  document.querySelector('.video-bg source').src = config.bgUrl;
-  document.querySelector('.video-bg').load();
-  document.querySelector('.welcome').style.backgroundImage = `url(${config.welcomeBgUrl})`;
-  loadMusic();
-  alert('保存成功！');
-  closeSetting();
+function getCode(id){
+    if(!confirm("请确认您已满18周岁，未成年人禁止购买！")){
+        return;
+    }
+    alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 </script>
 </body>
