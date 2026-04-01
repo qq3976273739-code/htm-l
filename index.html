@@ -15,7 +15,7 @@ html,body{
     width:100%;
 }
 
-/* 欢迎页 ———— 完全原样没动！！！ */
+/* 欢迎页样式（完全原样保留） */
 .welcome{
     position:fixed;
     width:100%;
@@ -67,7 +67,7 @@ html,body{
     color:#ff4d4f;
 }
 
-/* 加载 ———— 完全原样没动 */
+/* 加载动画（完全原样保留） */
 .loading{
     position:fixed;
     left:0;
@@ -98,7 +98,7 @@ html,body{
     to{transform:rotate(360deg)}
 }
 
-/* 主页面样式 ———— 完全原样没动 */
+/* 主页面样式（完全原样保留） */
 body{
     background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center fixed !important;
     background-size:cover !important;
@@ -112,7 +112,7 @@ body{
     font-size:28px;
     font-weight:bold;
     text-shadow:0 0 10px #000;
-    z-index:10;
+    z-index:999;
 }
 .container{
     max-width:800px;
@@ -177,40 +177,47 @@ p{
     color:#ff4d4f;
 }
 
-/* 只新增：音乐按钮样式（主页面右上角） */
+/* 音乐按钮样式（主页面右上角，层级拉满） */
 .music-btn{
     position:fixed;
     top:20px;
-    right:80px;
-    width:36px;
-    height:36px;
+    right:20px;
+    width:40px;
+    height:40px;
     border-radius:50%;
     background:#222;
     color:#fff;
     border:1px solid #2d8cf0;
     cursor:pointer;
-    z-index:999;
-    font-size:16px;
+    z-index:99999;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-/* 只新增：后台按钮样式 */
+/* 后台按钮样式（右下角，层级拉满，绝对显示） */
 .admin-btn{
     position:fixed;
     bottom:20px;
     right:20px;
     background:#222;
     color:#fff;
-    padding:8px 12px;
+    padding:10px 16px;
     border-radius:8px;
     border:1px solid #2d8cf0;
     cursor:pointer;
-    z-index:999;
+    z-index:99999;
+    font-size:14px;
+    font-weight:bold;
 }
+
+/* 弹窗样式（层级拉满） */
 .modal{
     position:fixed;
     left:0;top:0;width:100%;height:100%;
     background:rgba(0,0,0,0.9);
-    z-index:20000;
+    z-index:999999;
     display:none;
     align-items:center;
     justify-content:center;
@@ -231,23 +238,30 @@ p{
     border:1px solid #444;
     border-radius:6px;
 }
+.modal .btn{
+    margin-top:10px;
+    width:100%;
+}
 </style>
 </head>
 <body>
 
-<!-- 只新增：音乐标签（欢迎页不会播放） -->
+<!-- 音乐标签 -->
 <audio id="bgMusic" loop>
 
-<!-- 只新增：主页面音乐按钮（欢迎页看不见） -->
+<!-- 音乐按钮（主页面显示，欢迎页不显示） -->
 <button class="music-btn" onclick="toggleMusic()" id="musicBtn">🎵</button>
 
-<!-- 加载 ———— 完全原样没动 -->
+<!-- 后台按钮（绝对显示，层级最高） -->
+<button class="admin-btn" onclick="openAdmin()">后台管理</button>
+
+<!-- 加载动画 -->
 <div class="loading" id="loading">
     <div class="spin"></div>
     <p>正在进入网站...</p >
 </div>
 
-<!-- 欢迎页 ———— 100%原样，没动任何一个字！！！ -->
+<!-- 欢迎页（完全原样保留，没动任何内容） -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
     <div class="welcome-disclaimer">
@@ -260,7 +274,7 @@ p{
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
 
-<!-- 主页面内容 ———— 100%原样，没动任何一个字！！！ -->
+<!-- 主页面内容（完全原样保留，没动任何内容） -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
     <div class="disclaimer">
@@ -334,10 +348,7 @@ p{
     </div>
 </div>
 
-<!-- 只新增：后台入口 -->
-<button class="admin-btn" onclick="openAdmin()">后台管理</button>
-
-<!-- 只新增：登录弹窗 -->
+<!-- 登录弹窗 -->
 <div class="modal" id="loginModal">
   <div class="box">
     <h3>管理员登录</h3>
@@ -346,31 +357,31 @@ p{
   </div>
 </div>
 
-<!-- 只新增：设置弹窗（只改音乐） -->
+<!-- 设置弹窗 -->
 <div class="modal" id="settingModal">
   <div class="box">
     <h3>网站设置</h3>
     <p>背景音乐链接（MP3）：</p >
-    <input type="text" id="musicUrl" placeholder="填入网络MP3地址">
+    <input type="text" id="musicUrl" placeholder="填入网络MP3直链">
     <button class="btn" onclick="saveConfig()">保存设置</button>
   </div>
 </div>
 
 <script>
-// 只新增：配置
-let config = JSON.parse(localStorage.getItem('hutian')) || {
+// 配置存储
+let config = JSON.parse(localStorage.getItem('hutian_music')) || {
   musicUrl: ""
 };
 
-// 只新增：应用音乐
+// 应用音乐
 function applyMusic() {
+  const au = document.getElementById('bgMusic');
   if (config.musicUrl) {
-    const au = document.getElementById('bgMusic');
     au.src = config.musicUrl;
   }
 }
 
-// 只新增：播放/暂停切换
+// 音乐播放/暂停切换
 function toggleMusic() {
   const au = document.getElementById('bgMusic');
   const btn = document.getElementById('musicBtn');
@@ -383,7 +394,7 @@ function toggleMusic() {
   }
 }
 
-// 原有逻辑 ———— 完全没动！！！
+// 原有逻辑（完全没动）
 function enter(){
   document.getElementById('loading').style.display = 'flex';
   setTimeout(()=>{
@@ -399,7 +410,7 @@ function getCode(id){
   alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 
-// 只新增：后台逻辑
+// 后台逻辑
 let isAdmin = false;
 const PWD = "wangyiming87";
 
@@ -407,7 +418,8 @@ function openAdmin() {
   document.getElementById('loginModal').style.display = 'flex';
 }
 function adminLogin() {
-  if (document.getElementById('pwd').value === PWD) {
+  const pwdInput = document.getElementById('pwd');
+  if (pwdInput.value === PWD) {
     isAdmin = true;
     document.getElementById('loginModal').style.display = 'none';
     document.getElementById('musicUrl').value = config.musicUrl || '';
@@ -419,9 +431,10 @@ function adminLogin() {
 function saveConfig() {
   if (!isAdmin) return;
   config.musicUrl = document.getElementById('musicUrl').value.trim();
-  localStorage.setItem('hutian', JSON.stringify(config));
+  localStorage.setItem('hutian_music', JSON.stringify(config));
   applyMusic();
-  alert('保存成功');
+  alert('保存成功！');
+  document.getElementById('settingModal').style.display = 'none';
 }
 
 // 初始化
