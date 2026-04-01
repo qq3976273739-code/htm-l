@@ -14,6 +14,57 @@ html,body{
     height:100%;
     width:100%;
 }
+
+/* 欢迎页样式 */
+.welcome{
+    position:fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top:0;
+    z-index:999;
+    background:url("https://i.cetsteam.com/imgs/2026/04/01/a93f0949670e30b2.jpg") no-repeat center center fixed;
+    background-size:cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    padding:0 20px;
+}
+.welcome h1{
+    color:#fff;
+    font-size:42px;
+    margin-bottom:20px;
+    text-shadow:0 0 10px #000;
+}
+.enter-btn{
+    background:#2d8cf0;
+    color:#fff;
+    border:none;
+    padding:15px 40px;
+    font-size:20px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+/* 欢迎页免责声明 */
+.welcome-disclaimer{
+    background:rgba(0,0,0,0.7);
+    padding:15px;
+    border-radius:10px;
+    max-width:500px;
+    color:#fff;
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+    border:1px solid rgba(255,255,255,0.2);
+}
+.welcome-disclaimer strong{
+    color:#ff4d4f;
+}
+
+/* 原有页面样式不变 */
 body{
     background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center !important;
     background-size:cover !important;
@@ -92,26 +143,42 @@ p{
 </head>
 <body>
 
+<!-- 欢迎页 + 免责声明 -->
+<div class="welcome" id="welcome">
+    <h1>虎天寿发卡</h1>
+    
+    <div class="welcome-disclaimer">
+        <p><strong>⚠️ 重要声明</strong></p >
+        <p>1. 未满十八周岁未成年人禁止购买</p >
+        <p>2. 未成年人需在监护人同意下购买</p >
+        <p>3. 擅自购买后果自负，平台概不负责</p >
+        <p>4. 点击进入即视为已阅读并同意本声明</p >
+    </div>
+
+    <button class="enter-btn" onclick="enter()">进入发卡网站</button>
+</div>
+
+<!-- 原有内容不变 -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
 
     <div class="disclaimer">
-        <p><strong>⚠️ 重要免责声明</strong></p>
-        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p>
-        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p>
-        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p>
-        <p>4. 点击购买即视为已阅读并同意本声明。</p>
+        <p><strong>⚠️ 重要免责声明</strong></p >
+        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
+        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p >
+        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p >
+        <p>4. 点击购买即视为已阅读并同意本声明。</p >
     </div>
 
     <h1>卡密发卡</h1>
 
     <div class="box">
         <h3>社区小时体验卡</h3>
-        <p>价格：3元</p>
+        <p>价格：3元</p >
         <button class="btn" onclick="showPay(1)">立即购买</button>
         <div class="pay" id="pay1">
-            <p>请扫码支付 3元</p>
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
+            <p>请扫码支付 3元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/c0bc592857fd8edd.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(1)">已支付，获取卡密</button>
         </div>
@@ -120,11 +187,11 @@ p{
 
     <div class="box">
         <h3>社区天卡</h3>
-        <p>价格：5元</p>
+        <p>价格：5元</p >
         <button class="btn" onclick="showPay(2)">立即购买</button>
         <div class="pay" id="pay2">
-            <p>请扫码支付 5元</p>
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
+            <p>请扫码支付 5元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/8944c3db6fc0f30d.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(2)">已支付，获取卡密</button>
         </div>
@@ -133,37 +200,36 @@ p{
 
     <div class="box">
         <h3>社区永久卡</h3>
-        <p>价格：10元</p>
+        <p>价格：10元</p >
         <button class="btn" onclick="showPay(3)">立即购买</button>
         <div class="pay" id="pay3">
-            <p>请扫码支付 10元</p>
-            <img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
+            <p>请扫码支付 10元</p >
+            < img src="https://i.cetsteam.com/imgs/2026/03/31/69fea76e08d129bc.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(3)">已支付，获取卡密</button>
         </div>
         <div class="code" id="code3"></div>
     </div>
 
-    <!-- 安装软件 → 直接下载APK -->
     <div class="box">
         <h3>安装软件</h3>
-        <p>点击下方按钮直接下载安装包</p>
-        <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/io.dcloud.application.DCloudApplication.apk"
+        <p>点击下方按钮直接下载安装包</p >
+        <a href=" "
            class="btn"
            style="text-decoration:none; display:inline-block;"
            target="_blank"
            download>
            📥 立即下载APK
-        </a>
+        </a >
     </div>
 
     <div class="box">
         <h3>赞助一下呗</h3>
-        <p>价格：随便</p>
+        <p>价格：随便</p >
         <button class="btn" onclick="showPay(5)">立即购买</button>
         <div class="pay" id="pay5">
-            <p>请扫码支付 </p>
-            <img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
+            <p>请扫码支付 </p >
+            < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
             <br>
             <button class="btn" onclick="getCode(5)">已支付，获取卡密</button>
         </div>
@@ -172,10 +238,12 @@ p{
 </div>
 
 <script>
+function enter(){
+    document.getElementById('welcome').style.display='none';
+}
 function showPay(id){
     document.getElementById('pay'+id).style.display="block";
 }
-
 function getCode(id){
     if(!confirm("请确认您已满18周岁，未成年人禁止购买！")){
         return;
@@ -184,4 +252,4 @@ function getCode(id){
 }
 </script>
 </body>
-</html>     
+</html>
