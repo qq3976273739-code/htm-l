@@ -15,7 +15,17 @@ html,body{
     width:100%;
 }
 
-/* 欢迎页样式（完全保留你原来的） */
+/* 主页面视频背景 */
+.video-bg{
+    position:fixed;
+    left:0;top:0;
+    width:100vw;
+    height:100vh;
+    z-index:-1;
+    object-fit:cover;
+}
+
+/* 欢迎页背景 */
 .welcome{
     position:fixed;
     width:100%;
@@ -23,7 +33,7 @@ html,body{
     left:0;
     top:0;
     z-index:999;
-    background:url("https://i.cetsteam.com/imgs/2026/04/01/a93f0949670e30b2.jpg") no-repeat center center fixed;
+    background:url("https://i.cetsteam.com/imgs/2026/04/02/1ce36e88ba086cef.jpg") no-repeat center center fixed;
     background-size:cover;
     display:flex;
     align-items:center;
@@ -67,14 +77,13 @@ html,body{
     color:#ff4d4f;
 }
 
-/* 加载动画（完全保留你原来的） */
 .loading{
     position:fixed;
     left:0;
     top:0;
     width:100%;
     height:100%;
-    background:transparent;
+    background:rgba(0,0,0,.85);
     display:none;
     align-items:center;
     justify-content:center;
@@ -98,11 +107,7 @@ html,body{
     to{transform:rotate(360deg)}
 }
 
-/* 主页面样式（完全保留你原来的） */
 body{
-    background:url("https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg") no-repeat center center fixed !important;
-    background-size:cover !important;
-    background-attachment:fixed !important;
     color:#fff;
 }
 .top-name{
@@ -177,7 +182,6 @@ p{
     color:#ff4d4f;
 }
 
-/* 仅新增：后台按钮样式（右下角，层级拉满） */
 .admin-btn{
     position:fixed;
     bottom:20px;
@@ -193,7 +197,6 @@ p{
     font-weight:bold;
 }
 
-/* 仅新增：弹窗样式（层级拉满） */
 .modal{
     position:fixed;
     left:0;top:0;width:100%;height:100%;
@@ -227,13 +230,17 @@ p{
 </head>
 <body>
 
-<!-- 加载动画（完全保留） -->
+<!-- 主页面视频背景 -->
+<video class="video-bg" autoplay muted loop playsinline>
+    <source src="https://img.naixiai.cn/2026/04/02/mmexport1775135670844a421ad588b875960.mp4" type="video/mp4">
+</video>
+
 <div class="loading" id="loading">
     <div class="spin"></div>
     <p>正在进入网站...</p >
 </div>
 
-<!-- 欢迎页（完全保留，仅绑定背景配置） -->
+<!-- 欢迎页 -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
     <div class="welcome-disclaimer">
@@ -246,7 +253,6 @@ p{
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
 
-<!-- 主页面内容（完全保留，仅用JS动态渲染商品） -->
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
     <div class="disclaimer">
@@ -258,14 +264,11 @@ p{
     </div>
 
     <h1>卡密发卡</h1>
-    <!-- 商品区域（动态渲染，不影响原有结构） -->
     <div id="goodsArea"></div>
 </div>
 
-<!-- 仅新增：后台入口按钮 -->
 <button class="admin-btn" onclick="openAdmin()">后台管理</button>
 
-<!-- 仅新增：登录弹窗 -->
 <div class="modal" id="loginModal">
   <div class="box">
     <h3>管理员登录</h3>
@@ -274,14 +277,9 @@ p{
   </div>
 </div>
 
-<!-- 仅新增：设置弹窗（核心后台功能） -->
 <div class="modal" id="settingModal">
   <div class="box">
     <h3>网站设置</h3>
-    <p>欢迎页背景图链接：</p >
-    <input type="text" id="welcomeBg" placeholder="不填则使用默认">
-    <p>主页面背景图链接：</p >
-    <input type="text" id="mainBg" placeholder="不填则使用默认">
     <p>自定义商品（一行一个，格式：名称|价格）：</p >
     <textarea id="goodsList" rows="8" placeholder="例如：
 社区小时体验卡|3
@@ -294,13 +292,7 @@ p{
 </div>
 
 <script>
-// ==================== 配置存储（核心） ====================
 let siteConfig = JSON.parse(localStorage.getItem('hutian_site_config')) || {
-  // 默认欢迎页背景（你原来的图）
-  welcomeBg: "https://i.cetsteam.com/imgs/2026/04/01/a93f0949670e30b2.jpg",
-  // 默认主页面背景（你原来的图）
-  mainBg: "https://s41.ax1x.com/2026/03/30/pe8kyA1.jpg",
-  // 默认商品列表（你原来的4个商品）
   goods: [
     {name: "社区小时体验卡", price: "3元"},
     {name: "社区天卡", price: "5元"},
@@ -309,27 +301,11 @@ let siteConfig = JSON.parse(localStorage.getItem('hutian_site_config')) || {
   ]
 };
 
-// ==================== 应用配置（渲染页面） ====================
-function applyAllConfig() {
-  // 1. 应用欢迎页背景
-  if (siteConfig.welcomeBg) {
-    document.getElementById('welcome').style.backgroundImage = `url(${siteConfig.welcomeBg})`;
-  }
-  // 2. 应用主页面背景
-  if (siteConfig.mainBg) {
-    document.body.style.backgroundImage = `url(${siteConfig.mainBg})`;
-  }
-  // 3. 渲染商品列表
-  renderGoods();
-}
-
-// ==================== 渲染商品（动态生成板块） ====================
 function renderGoods() {
   const goodsArea = document.getElementById('goodsArea');
-  goodsArea.innerHTML = ''; // 清空原有商品
+  goodsArea.innerHTML = '';
 
   siteConfig.goods.forEach((goods, index) => {
-    // 生成单个商品板块（完全还原你原来的样式）
     const goodsHtml = `
     <div class="box">
       <h3>${goods.name}</h3>
@@ -347,16 +323,18 @@ function renderGoods() {
   });
 }
 
-// ==================== 原有逻辑（完全保留，未修改） ====================
 function enter(){
   document.getElementById('loading').style.display = 'flex';
   setTimeout(()=>{
     document.getElementById('loading').style.display = 'none';
     document.getElementById('welcome').style.display='none';
-  }, 3000);
+  }, 1200);
 }
 
 function showPay(id){
+  document.querySelectorAll('.pay').forEach((el,i)=>{
+    if(i!=id) el.style.display='none';
+  });
   document.getElementById('pay'+id).style.display="block";
 }
 
@@ -365,61 +343,44 @@ function getCode(id){
   alert("支付成功请截图\n联系QQ：3608504926 领取卡密");
 }
 
-// ==================== 后台逻辑（仅新增） ====================
 let isAdminLogin = false;
-const ADMIN_PWD = "wangyiming87"; // 后台密码
+const ADMIN_PWD = "wangyiming87";
 
-// 打开后台登录弹窗
 function openAdmin() {
   document.getElementById('loginModal').style.display = 'flex';
+  document.getElementById('pwd').value = '';
 }
 
-// 后台登录验证
 function adminLogin() {
-  const pwdInput = document.getElementById('pwd');
-  if (pwdInput.value === ADMIN_PWD) {
+  const pwd = document.getElementById('pwd').value.trim();
+  if (pwd === ADMIN_PWD) {
     isAdminLogin = true;
-    // 关闭登录弹窗，打开设置弹窗
     document.getElementById('loginModal').style.display = 'none';
-    // 填充现有配置到表单
-    document.getElementById('welcomeBg').value = siteConfig.welcomeBg || '';
-    document.getElementById('mainBg').value = siteConfig.mainBg || '';
-    // 把商品列表转成文本（一行一个：名称|价格）
+    
     const goodsText = siteConfig.goods.map(g => `${g.name}|${g.price}`).join('\n');
     document.getElementById('goodsList').value = goodsText;
-    // 显示设置弹窗
     document.getElementById('settingModal').style.display = 'flex';
   } else {
-    alert('密码错误，请重试！');
+    alert('密码错误');
   }
 }
 
-// 保存所有配置
 function saveAllConfig() {
   if (!isAdminLogin) return;
 
-  // 1. 保存背景图
-  siteConfig.welcomeBg = document.getElementById('welcomeBg').value.trim() || siteConfig.welcomeBg;
-  siteConfig.mainBg = document.getElementById('mainBg').value.trim() || siteConfig.mainBg;
-
-  // 2. 保存商品列表（解析文本）
   const goodsText = document.getElementById('goodsList').value.trim();
-  const lines = goodsText.split('\n').filter(line => line.trim() !== ''); // 过滤空行
+  const lines = goodsText.split('\n').filter(l => l.trim());
   siteConfig.goods = lines.map(line => {
-    const [name, price] = line.split('|').map(item => item.trim());
-    return {name: name || "未命名商品", price: price || "0元"};
+    const [name, price] = line.split('|').map(s=>s.trim());
+    return { name: name||"商品", price: price||"0元" };
   });
 
-  // 3. 保存到本地存储
   localStorage.setItem('hutian_site_config', JSON.stringify(siteConfig));
-
-  // 4. 应用配置并刷新页面
-  alert('保存成功！页面即将刷新');
+  alert('保存成功！');
   location.reload();
 }
 
-// ==================== 初始化页面 ====================
-applyAllConfig();
+renderGoods();
 </script>
 </body>
 </html>
