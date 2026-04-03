@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>虎天寿发卡</title>
 <style>
 *{
@@ -23,6 +24,41 @@ html,body{
     height:100vh;
     z-index:-1;
     object-fit:cover;
+}
+
+/* 新增：软件下载悬浮小框 */
+.download-box{
+    position:fixed;
+    top:20px;
+    right:20px;
+    z-index:9999;
+    background:rgba(0,0,0,0.85);
+    padding:15px;
+    border-radius:10px;
+    border:2px solid #2d8cf0;
+    width:200px;
+}
+.download-box h4{
+    color:#2d8cf0;
+    text-align:center;
+    margin-bottom:10px;
+    font-size:16px;
+}
+.download-btn{
+    display:block;
+    width:100%;
+    padding:10px;
+    background:#2d8cf0;
+    color:#fff;
+    text-align:center;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:14px;
+    transition:all 0.3s;
+}
+.download-btn:hover{
+    background:#1b76d0;
+    transform:scale(1.03);
 }
 
 /* 欢迎页背景 */
@@ -230,25 +266,32 @@ p{
 </head>
 <body>
 
+<!-- 新增：软件下载悬浮小框 -->
+<div class="download-box">
+    <h4>下载专属软件</h4>
+    <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/io.dcloud.application.DCloudApplication.apk" 
+       class="download-btn" target="_blank" download>立即下载APK</a>
+</div>
+
 <!-- 主页面视频背景 -->
 <video class="video-bg" autoplay muted loop playsinline>
-    <source src="https://img.naixiai.cn/2026/04/03/mmexport1775217352519.mp4" type="video/mp4">
+    <source src="https://img.naixiai.cn/2026/04/03/mmexport1775192114753.mp4" type="video/mp4">
 </video>
 
 <div class="loading" id="loading">
     <div class="spin"></div>
-    <p>正在进入网站...</p >
+    <p>正在进入网站...</p>
 </div>
 
 <!-- 欢迎页 -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
     <div class="welcome-disclaimer">
-        <p><strong>⚠️ 重要声明</strong></p >
-        <p>1. 未满十八周岁未成年人禁止购买</p >
-        <p>2. 未成年人需监护人同意下购买</p >
-        <p>3. 擅自购买后果自负，平台概不负责</p >
-        <p>4. 点击进入即视为已阅读并同意本声明</p >
+        <p><strong>⚠️ 重要声明</strong></p>
+        <p>1. 未满十八周岁未成年人禁止购买</p>
+        <p>2. 未成年人需监护人同意下购买</p>
+        <p>3. 擅自购买后果自负，平台概不负责</p>
+        <p>4. 点击进入即视为已阅读并同意本声明</p>
     </div>
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
@@ -256,25 +299,15 @@ p{
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
     <div class="disclaimer">
-        <p><strong>⚠️ 重要免责声明</strong></p >
-        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
-        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p >
-        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p >
-        <p>4. 点击购买即视为已阅读并同意本声明。</p >
+        <p><strong>⚠️ 重要免责声明</strong></p>
+        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p>
+        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p>
+        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p>
+        <p>4. 点击购买即视为已阅读并同意本声明。</p>
     </div>
 
     <h1>卡密发卡</h1>
     <div id="goodsArea"></div>
-
-    <!-- 下载软件 - 样式和商品一致 -->
-    <div class="box">
-        <h3>专属软件下载</h3>
-        <p>点击下方按钮下载APP</p >
-        <a href=" " 
-           class="btn" target="_blank" style="display:inline-block;text-decoration:none">
-           立即下载
-        </a >
-    </div>
 </div>
 
 <button class="admin-btn" onclick="openAdmin()">后台管理</button>
@@ -290,7 +323,7 @@ p{
 <div class="modal" id="settingModal">
   <div class="box">
     <h3>网站设置</h3>
-    <p>自定义商品（一行一个，格式：名称|价格）：</p >
+    <p>自定义商品（一行一个，格式：名称|价格）：</p>
     <textarea id="goodsList" rows="8" placeholder="例如：
 社区小时体验卡|3
 社区天卡|5
@@ -319,11 +352,11 @@ function renderGoods() {
     const goodsHtml = `
     <div class="box">
       <h3>${goods.name}</h3>
-      <p>价格：${goods.price}</p >
+      <p>价格：${goods.price}</p>
       <button class="btn" onclick="showPay(${index})">立即购买</button>
       <div class="pay" id="pay${index}">
-        <p>请扫码支付 ${goods.price}</p >
-        < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img">
+        <p>请扫码支付 ${goods.price}</p>
+        <img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img" alt="收款码">
         <br>
         <button class="btn" onclick="getCode(${index})">已支付，获取卡密</button>
       </div>
