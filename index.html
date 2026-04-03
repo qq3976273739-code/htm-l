@@ -15,7 +15,7 @@ html,body{
     width:100%;
 }
 
-/* 主页面视频背景 */
+/* 主页面背景（视频+图片兜底） */
 .video-bg{
     position:fixed;
     left:0;top:0;
@@ -23,6 +23,19 @@ html,body{
     height:100vh;
     z-index:-1;
     object-fit:cover;
+    /* 视频加载失败时显示黑色背景 */
+    background:#000;
+}
+/* 视频不支持时显示的静态图 */
+.video-fallback{
+    position:fixed;
+    left:0;top:0;
+    width:100vw;
+    height:100vh;
+    z-index:-2;
+    background:url("https://i.cetsteam.com/imgs/2026/04/02/1ce36e88ba086cef.jpg") no-repeat center center;
+    background-size:cover;
+    display:none;
 }
 
 /* 欢迎页背景 */
@@ -230,9 +243,10 @@ p{
 </head>
 <body>
 
-<!-- 主页面视频背景 -->
-<video class="video-bg" autoplay muted loop playsinline>
-    <source src="https://img.naixiai.cn/2026/04/02/mmexport1775135670844a421ad588b875960.mp4" type="video/mp4">
+<!-- 视频背景 + 静态图兜底（微信兼容） -->
+<div class="video-fallback"></div>
+<video class="video-bg" muted playsinline webkit-playsinline>
+    <source src="https://img.naixiai.cn/2026/04/03/1775192114753.mp4" type="video/mp4">
 </video>
 
 <div class="loading" id="loading">
@@ -265,14 +279,6 @@ p{
 
     <h1>卡密发卡</h1>
     <div id="goodsArea"></div>
-
-    <!-- 新增：软件下载商品（独立板块，不影响原有结构） -->
-    <div class="box">
-        <h3>软件下载</h3>
-        <p>软件名称：DCloud 应用安装包</p >
-        <p>大小：APK 安装包，适用于安卓设备</p >
-        <a href=" " target="_blank" class="btn">立即下载</a >
-    </div>
 </div>
 
 <button class="admin-btn" onclick="openAdmin()">后台管理</button>
@@ -300,6 +306,23 @@ p{
 </div>
 
 <script>
+// 微信兼容：视频在用户点击后再播放（解决自动播放拦截）
+const video = document.querySelector('.video-bg');
+const fallback = document.querySelector('.video-fallback');
+
+function tryPlayVideo() {
+  video.play().catch(err => {
+    // 播放失败 → 显示静态图兜底
+    video.style.display = 'none';
+    fallback.style.display = 'block';
+    console.log('视频自动播放被拦截，使用静态背景');
+  });
+}
+
+// 页面加载后尝试播放
+window.addEventListener('load', tryPlayVideo);
+
+// 网站配置
 let siteConfig = JSON.parse(localStorage.getItem('hutian_site_config')) || {
   goods: [
     {name: "社区小时体验卡", price: "3元"},
@@ -336,6 +359,8 @@ function enter(){
   setTimeout(()=>{
     document.getElementById('loading').style.display = 'none';
     document.getElementById('welcome').style.display='none';
+    // 进入后再确保视频播放
+    tryPlayVideo();
   }, 1200);
 }
 
