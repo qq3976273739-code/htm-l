@@ -157,6 +157,9 @@ body{
     max-width:220px;
     border-radius:10px;
     margin-top:10px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
 }
 h1{
     text-align:center;
@@ -238,18 +241,18 @@ p{
 
 <div class="loading" id="loading">
     <div class="spin"></div>
-    <p>正在进入网站...</p >
+    <p>正在进入网站...</p>
 </div>
 
 <!-- 欢迎页 -->
 <div class="welcome" id="welcome">
     <h1>虎天寿发卡</h1>
     <div class="welcome-disclaimer">
-        <p><strong>⚠️ 重要声明</strong></p >
-        <p>1. 未满十八周岁未成年人禁止购买</p >
-        <p>2. 未成年人需监护人同意下购买</p >
-        <p>3. 擅自购买后果自负，平台概不负责</p >
-        <p>4. 点击进入即视为已阅读并同意本声明</p >
+        <p><strong>⚠️ 重要声明</strong></p>
+        <p>1. 未满十八周岁未成年人禁止购买</p>
+        <p>2. 未成年人需监护人同意下购买</p>
+        <p>3. 擅自购买后果自负，平台概不负责</p>
+        <p>4. 点击进入即视为已阅读并同意本声明</p>
     </div>
     <button class="enter-btn" onclick="enter()">进入发卡网站</button>
 </div>
@@ -257,11 +260,11 @@ p{
 <div class="top-name">虎天寿发卡</div>
 <div class="container">
     <div class="disclaimer">
-        <p><strong>⚠️ 重要免责声明</strong></p >
-        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p >
-        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p >
-        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p >
-        <p>4. 点击购买即视为已阅读并同意本声明。</p >
+        <p><strong>⚠️ 重要免责声明</strong></p>
+        <p>1. 本平台所有卡密商品，<strong>未满十八周岁的未成年人禁止购买</strong>。</p>
+        <p>2. 未成年人如确需购买，必须在监护人知情、同意及陪同下进行。</p>
+        <p>3. 擅自购买产生的一切纠纷与损失，由购买者及监护人自行承担，平台概不负责。</p>
+        <p>4. 点击购买即视为已阅读并同意本声明。</p>
     </div>
 
     <h1>卡密发卡</h1>
@@ -272,20 +275,20 @@ p{
 
     <div class="box">
         <h3>主程序APK</h3>
-        <p>类型：安装包下载</p >
-        <a href=" " 
-           target="_blank" class="btn" style="text-decoration:none;display:inline-block;">立即下载</a >
+        <p>类型：安装包下载</p>
+        <a href="https://ghproxy.com/https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/io.dcloud.application.DCloudApplication.apk" 
+           target="_blank" class="btn" style="text-decoration:none;display:inline-block;">立即下载</a>
     </div>
 
     <div class="box">
         <h3>虚拟机安装包</h3>
-        <p>类型：安装包下载</p >
-        <p style="color:#2d8cf0;margin-top:5px;">购买卡密赠送虚拟机时长：</p >
-        <p style="font-size:14px;margin:2px 0;">✅ 小时卡 = 虚拟机1小时</p >
-        <p style="font-size:14px;margin:2px 0;">✅ 月卡 = 虚拟机1个月</p >
-        <p style="font-size:14px;margin:2px 0;">✅ 永久卡 = 虚拟机永久</p >
+        <p>类型：安装包下载</p>
+        <p style="color:#2d8cf0;margin-top:5px;">购买卡密赠送虚拟机时长：</p>
+        <p style="font-size:14px;margin:2px 0;">✅ 小时卡 = 虚拟机1小时</p>
+        <p style="font-size:14px;margin:2px 0;">✅ 月卡 = 虚拟机1个月</p>
+        <p style="font-size:14px;margin:2px 0;">✅ 永久卡 = 虚拟机永久</p>
         <a href="https://ghproxy.com/https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/default.apk" 
-           target="_blank" class="btn" style="text-decoration:none;display:inline-block;margin-top:10px;">立即下载</a >
+           target="_blank" class="btn" style="text-decoration:none;display:inline-block;margin-top:10px;">立即下载</a>
     </div>
 </div>
 
@@ -302,7 +305,7 @@ p{
 <div class="modal" id="settingModal">
   <div class="box">
     <h3>网站设置</h3>
-    <p>自定义商品（一行一个，格式：名称|价格）：</p >
+    <p>自定义商品（一行一个，格式：名称|价格）：</p>
     <textarea id="goodsList" rows="8" placeholder="例如：
 社区小时体验卡|3
 社区天卡|5
@@ -331,11 +334,11 @@ function renderGoods() {
     const goodsHtml = `
     <div class="box">
       <h3>${goods.name}</h3>
-      <p>价格：${goods.price}</p >
+      <p>价格：${goods.price}</p>
       <button class="btn" onclick="showPay(${index})">立即购买</button>
       <div class="pay" id="pay${index}">
-        <p>请扫码支付 ${goods.price}</p >
-        < img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img" alt="收款码">
+        <p>请扫码支付 ${goods.price}</p>
+        <img src="https://i.cetsteam.com/imgs/2026/04/01/6206ae66c0bf00a8.png" class="pay-img" alt="收款码">
         <br>
         <button class="btn" onclick="getCode(${index})">已支付，获取卡密</button>
       </div>
