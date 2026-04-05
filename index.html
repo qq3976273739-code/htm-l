@@ -26,44 +26,6 @@ html,body{
     object-fit:cover;
 }
 
-/* 新增：软件下载悬浮小框 */
-.download-box{
-    position:fixed;
-    top:20px;
-    right:20px;
-    z-index:9999;
-    background:rgba(0,0,0,0.85);
-    padding:15px;
-    border-radius:10px;
-    border:2px solid #2d8cf0;
-    width:200px;
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-}
-.download-box h4{
-    color:#2d8cf0;
-    text-align:center;
-    margin-bottom:4px;
-    font-size:16px;
-}
-.download-btn{
-    display:block;
-    width:100%;
-    padding:10px;
-    background:#2d8cf0;
-    color:#fff;
-    text-align:center;
-    text-decoration:none;
-    border-radius:8px;
-    font-size:14px;
-    transition:all 0.3s;
-}
-.download-btn:hover{
-    background:#1b76d0;
-    transform:scale(1.03);
-}
-
 /* 欢迎页背景 */
 .welcome{
     position:fixed;
@@ -269,15 +231,6 @@ p{
 </head>
 <body>
 
-<!-- 下载悬浮框：两个按钮 -->
-<div class="download-box">
-    <h4>下载专属软件</h4>
-    <a href=" " 
-       class="download-btn" target="_blank" download>主程序APK</a >
-    <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/com.vphonegaga.titan.MyApp.apk" 
-       class="download-btn" target="_blank" download>虚拟机安装包</a >
-</div>
-
 <!-- 主页面视频背景 -->
 <video class="video-bg" autoplay muted loop playsinline>
     <source src="https://img.naixiai.cn/2026/04/03/mmexport1775192114753.mp4" type="video/mp4">
@@ -313,6 +266,27 @@ p{
 
     <h1>卡密发卡</h1>
     <div id="goodsArea"></div>
+
+    <!-- 软件下载 做成商品样式 -->
+    <h1 style="margin-top:40px;">软件下载</h1>
+
+    <div class="box">
+        <h3>主程序APK</h3>
+        <p>类型：安装包下载</p >
+        <a href=" " 
+           target="_blank" class="btn" style="text-decoration:none;display:inline-block;">立即下载</a >
+    </div>
+
+    <div class="box">
+        <h3>虚拟机安装包</h3>
+        <p>类型：安装包下载</p >
+        <p style="color:#2d8cf0;margin-top:5px;">购买卡密赠送虚拟机时长：</p >
+        <p style="font-size:14px;margin:2px 0;">✅ 小时卡 = 虚拟机1小时</p >
+        <p style="font-size:14px;margin:2px 0;">✅ 月卡 = 虚拟机1个月</p >
+        <p style="font-size:14px;margin:2px 0;">✅ 永久卡 = 虚拟机永久</p >
+        <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/default.apk" 
+           target="_blank" class="btn" style="text-decoration:none;display:inline-block;margin-top:10px;">立即下载</a >
+    </div>
 </div>
 
 <button class="admin-btn" onclick="openAdmin()">后台管理</button>
