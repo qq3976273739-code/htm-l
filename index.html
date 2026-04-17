@@ -228,6 +228,83 @@ p{
     margin-top:10px;
     width:100%;
 }
+
+/* ======== DeepSeek AI 助手样式 ======== */
+.ai-chat-btn {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #4D6BFE; /* DeepSeek 官方蓝 */
+    color: white;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    z-index: 999999;
+    box-shadow: 0 0 15px rgba(77,107,254,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ai-chat-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+}
+.ai-chat-box {
+    position: fixed;
+    bottom: 140px;
+    right: 20px;
+    width: 320px;
+    max-width: 90vw;
+    height: 450px;
+    background: rgba(0,0,0,0.9);
+    border: 1px solid #4D6BFE;
+    border-radius: 14px;
+    z-index: 999999;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+.ai-header {
+    padding: 12px;
+    background: #4D6BFE;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.ai-messages {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+.ai-input {
+    width: 100%;
+    padding: 10px;
+    background: #111;
+    color: white;
+    border: none;
+    border-top: 1px solid #333;
+    outline: none;
+}
+.ai-msg-user {
+    text-align: right;
+    margin: 6px 0;
+    color: #fff;
+}
+.ai-msg-ai {
+    text-align: left;
+    margin: 6px 0;
+    color: #4fc3f7;
+    white-space: pre-wrap;
+}
+.ai-loading {
+    color: #aaa;
+    font-style: italic;
+}
 </style>
 </head>
 <body>
@@ -270,21 +347,38 @@ p{
 
     <div class="box">
         <h3>主程序APK</h3>
-        <p>类型：安装包下载（国内直连）</p>
-        <a href="https://pic.imgdb.cn/item/67d2a7e6d0e062f2d7cddf8f.apk" 
+        <p>类型：安装包下载（GitHub直连）</p>
+        <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/io.dcloud.application.DCloudApplication.apk" 
            target="_blank" class="btn" style="text-decoration:none;display:inline-block;">立即下载</a>
     </div>
 
     <div class="box">
         <h3>虚拟机安装包</h3>
-        <p>类型：安装包下载（国内直连）</p>
+        <p>类型：安装包下载（GitHub直连）</p>
         <p style="color:#2d8cf0;margin-top:5px;">购买卡密赠送虚拟机时长：</p>
         <p style="font-size:14px;margin:2px 0;">✅ 小时卡 = 虚拟机1小时</p>
         <p style="font-size:14px;margin:2px 0;">✅ 月卡 = 虚拟机1个月</p>
         <p style="font-size:14px;margin:2px 0;">✅ 永久卡 = 虚拟机永久</p>
-        <a href="https://pic.imgdb.cn/item/67d2a7e7d0e062f2d7cddf93.apk" 
+        <a href="https://github.com/qq3976273739-code/htm-l/releases/download/v1.0/default.apk" 
            target="_blank" class="btn" style="text-decoration:none;display:inline-block;margin-top:10px;">立即下载</a>
     </div>
+</div>
+
+<!-- ======== AI 按钮：DeepSeek 官方鲸鱼 Logo ======== -->
+<button class="ai-chat-btn" onclick="toggleAI()">
+    <svg viewBox="0 0 1024 424" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300.2 192.3c-10.3-10.3-21.5-18.6-33.8-24.8-12.3-6.2-25.6-9.3-39.1-9.3-13.5 0-26.8 3.1-39.1 9.3-12.3 6.2-23.5 14.5-33.8 24.8-10.3 10.3-18.6 21.5-24.8 33.8-6.2 12.3-9.3 25.6-9.3 39.1 0 13.5 3.1 26.8 9.3 39.1 6.2 12.3 14.5 23.5 24.8 33.8 10.3 10.3 21.5 18.6 33.8 24.8 12.3 6.2 25.6 9.3 39.1 9.3 13.5 0 26.8-3.1 39.1-9.3 12.3-6.2 23.5-14.5 33.8-24.8 10.3-10.3 18.6-21.5 24.8-33.8 6.2-12.3 9.3-25.6 9.3-39.1 0-13.5-3.1-26.8-9.3-39.1-6.2-12.3-14.5-23.5-24.8-33.8z" fill="white"/>
+        <path d="M266.4 256c0-17.7-14.3-32-32-32s-32 14.3-32 32 14.3 32 32 32 32-14.3 32-32z" fill="#4D6BFE"/>
+        <path d="M352 256c0-53-43-96-96-96s-96 43-96 96 43 96 96 96 96-43 96-96zm-96 64c-35.3 0-64-28.7-64-64s28.7-64 64-64 64 28.7 64 64-28.7 64-64 64z" fill="white"/>
+        <path d="M416 256c0-17.7 14.3-32 32-32h192c17.7 0 32 14.3 32 32s-14.3 32-32 32H448c-17.7 0-32-14.3-32-32z" fill="white"/>
+        <path d="M640 224c0-17.7 14.3-32 32-32h64c17.7 0 32 14.3 32 32s-14.3 32-32 32h-64c-17.7 0-32-14.3-32-32z" fill="white"/>
+    </svg>
+</button>
+
+<div class="ai-chat-box" id="aiChatBox">
+    <div class="ai-header">DeepSeek AI 助手</div>
+    <div class="ai-messages" id="aiMessages"></div>
+    <input type="text" class="ai-input" id="aiInput" placeholder="发送消息给 DeepSeek..." onkeydown="if(event.key==='Enter')sendAI()">
 </div>
 
 <button class="admin-btn" onclick="openAdmin()">后台管理</button>
@@ -398,6 +492,44 @@ function saveAllConfig() {
   localStorage.setItem('hutian_site_config', JSON.stringify(siteConfig));
   alert('保存成功！');
   location.reload();
+}
+
+// ======== DeepSeek AI 核心功能 ========
+function toggleAI() {
+  const box = document.getElementById('aiChatBox');
+  box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
+}
+
+async function sendAI() {
+  const input = document.getElementById('aiInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  const messages = document.getElementById('aiMessages');
+  messages.innerHTML += `<div class='ai-msg-user'>${msg}</div>`;
+  messages.innerHTML += `<div class='ai-loading'>DeepSeek 思考中...</div>`;
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "deepseek/deepseek-r1",
+        messages: [{ role: "user", content: msg }]
+      })
+    });
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content || "AI 暂时无法回复，请稍后再试";
+    
+    messages.innerHTML = messages.innerHTML.replace(/<div class='ai-loading'>.*?<\/div>/, '');
+    messages.innerHTML += `<div class='ai-msg-ai'>${reply}</div>`;
+  } catch (e) {
+    messages.innerHTML = messages.innerHTML.replace(/<div class='ai-loading'>.*?<\/div>/, '');
+    messages.innerHTML += `<div class='ai-msg-ai'>错误：${e.message}</div>`;
+  }
+  messages.scrollTop = messages.scrollHeight;
 }
 
 renderGoods();
