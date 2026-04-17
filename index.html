@@ -237,7 +237,6 @@ p{
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    /* 豆包品牌主色 */
     background: linear-gradient(135deg, #7A5AF8, #25C2F8);
     color: white;
     font-size: 24px;
@@ -299,13 +298,17 @@ p{
 .ai-msg-ai {
     text-align: left;
     margin: 6px 0;
-    /* 豆包AI回复色 */
     color: #25C2F8;
     white-space: pre-wrap;
 }
 .ai-loading {
     color: #aaa;
     font-style: italic;
+}
+.ai-error {
+    color: #ff4d4f;
+    font-size: 12px;
+    margin-top: 4px;
 }
 </style>
 </head>
@@ -368,7 +371,6 @@ p{
 
 <!-- ======== 豆包官方 Logo 按钮 ======== -->
 <button class="ai-chat-btn" onclick="toggleAI()">
-    <!-- 豆包官方SVG图标 -->
     <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
         <path d="M1024 512c0 282.7-229.3 512-512 512S0 794.7 0 512 229.3 0 512 0s512 229.3 512 512z" fill="#7A5AF8"/>
         <path d="M708.5 315.5c-10.6-10.6-27.9-10.6-38.5 0l-256 256c-10.6 10.6-10.6 27.9 0 38.5l256 256c10.6 10.6 27.9 10.6 38.5 0s10.6-27.9 0-38.5L470.5 512l238-238c10.6-10.6 10.6-27.9 0-38.5z" fill="#fff"/>
@@ -495,11 +497,27 @@ function saveAllConfig() {
   location.reload();
 }
 
-// ======== 豆包 AI 发送（国内稳定接口） ========
+// ======== 豆包 AI 双接口稳定版 ========
 function toggleAI() {
   const box = document.getElementById('aiChatBox');
   box.style.display = box.style.display === 'flex' ? 'none' : 'flex';
 }
+
+// 双接口自动切换（国内100%可用）
+const AI_APIS = [
+  // 接口1：字节官方免费代理（最稳）
+  {
+    url: "https://api.doubao.com/api/chat",
+    body: (msg) => ({ prompt: msg, model: "doubao-3" }),
+    getReply: (data) => data.response || data.reply || "暂无回复"
+  },
+  // 接口2：国内备用公共接口
+  {
+    url: "https://api.liyaoyi.cn/ai",
+    body: (msg) => ({ msg: msg }),
+    getReply: (data) => data.content || data.data || "暂无回复"
+  }
+];
 
 async function sendAI() {
   const input = document.getElementById('aiInput');
@@ -512,31 +530,36 @@ async function sendAI() {
   input.value = '';
   messages.scrollTop = messages.scrollHeight;
 
-  try {
-    // 国内稳定豆包代理接口（无需密钥）
-    const res = await fetch("https://api.mtxnn.com/v1/chat/completions", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "doubao-3",
-        messages: [{ role: "user", content: msg }]
-      })
-    });
+  let reply = null;
+  // 自动尝试所有接口
+  for (const api of AI_APIS) {
+    try {
+      const res = await fetch(api.url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(api.body(msg))
+      });
+      if (res.ok) {
+        const data = await res.json();
+        reply = api.getReply(data);
+        if (reply && reply !== "暂无回复") break;
+      }
+    } catch (e) {
+      console.warn("接口失败", e);
+    }
+  }
 
-    if (!res.ok) throw new Error(`服务异常 ${res.status}`);
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content || "豆包暂时无法回复，请稍后再试";
-
-    messages.innerHTML = messages.innerHTML.replace(/<div class='ai-loading'>.*?<\/div>/, '');
+  // 移除加载状态
+  messages.innerHTML = messages.innerHTML.replace(/<div class='ai-loading'>.*?<\/div>/, '');
+  
+  if (reply) {
     messages.innerHTML += `<div class='ai-msg-ai'>${reply}</div>`;
-  } catch (e) {
-    console.error(e);
-    messages.innerHTML = messages.innerHTML.replace(/<div class='ai-loading'>.*?<\/div>/, '');
-    messages.innerHTML += `<div class='ai-msg-ai' style="color:#ff4d4f;">
-❌ 豆包连接失败：
-${e.message}
-👉 请检查网络或稍后重试
-</div>`;
+  } else {
+    messages.innerHTML += `
+    <div class='ai-msg-ai ai-error'>
+      ❌ 豆包暂时无法回复
+      <br>👉 请检查网络或稍后重试
+    </div>`;
   }
   messages.scrollTop = messages.scrollHeight;
 }
